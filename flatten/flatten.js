@@ -28,3 +28,11 @@ function convert( a ) {
 
 console.log(flatten([1, [2, 3], [[4], [5, 6]]]));
 // => [1, 2, 3, 4, 5, 6];
+
+/*
+Functional style with ES6
+
+const flatten = arr => arr.reduce(
+  (a, b) => a.concat(Array.isArray(b) ? flatten(b) : b), []
+);
+*/
