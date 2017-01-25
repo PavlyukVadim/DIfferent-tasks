@@ -1,17 +1,40 @@
+"use strict";
+
 function List() {}
 
 function EmptyList() {}
+
+
 EmptyList.prototype = new List();
 EmptyList.prototype.constructor = EmptyList;
 
-EmptyList.prototype.toString = function() { /* implement this */ };
-EmptyList.prototype.isEmpty = function() { return true;/* implement this */ };
-EmptyList.prototype.length = function() { /* implement this */ };
-EmptyList.prototype.push = function(x) { /* implement this */ };
+EmptyList.prototype.toString = function() { 
+	return "()";
+};
+EmptyList.prototype.isEmpty = function() { 
+	return true;
+};
+
+EmptyList.prototype.length = function() { 
+	return 0;
+};
+
+EmptyList.prototype.push = function(x) { 
+	let listNode = new ListNode(x, this);
+	return listNode; 
+};
+
 EmptyList.prototype.remove = function(x) { /* implement this */ };
 EmptyList.prototype.append = function(xs) { /* implement this */ };
 
-function ListNode(value, next) { /* implement this */ }
+
+function ListNode(value, next) { 
+	this.value = value;
+	this.next = next;
+}
+
+
+
 ListNode.prototype = new List();
 ListNode.prototype.constructor = ListNode;
 ListNode.prototype.isEmpty = function() { /* implement this */ };
@@ -20,17 +43,33 @@ ListNode.prototype.toString = function() { /* implement this */ };
 
 ListNode.prototype.head = function() { /* implement this */ };
 ListNode.prototype.tail = function() { /* implement this */  };
-ListNode.prototype.length = function() { /* implement this */ };
-ListNode.prototype.push = function(x) { /* implement this */ };
+ListNode.prototype.length = function() {
+	let length = 0;
+	let list = this;
+	while (list instanceof ListNode) {
+		length++;
+		list = list.next;
+	}
+	return length;
+};
+
+ListNode.prototype.push = function(x) { 
+	let listNode = new ListNode(x, this);
+	return listNode;
+};
+
 ListNode.prototype.remove = function(x) { /* implement this */ };
 ListNode.prototype.append = function(xs) { /* implement this */ };
 
 
 
-/*var mt, l1, l2, l3, l4;
+var mt, l1, l2, l3, l4;
 
 mt = new EmptyList();
 l1 = mt.push('c').push('b').push('a');
+
+console.log(l1.length());
+/*
 l2 = l1.append(l1);
 l3 = l1.remove('b');
 l4 = l2.remove('b');
