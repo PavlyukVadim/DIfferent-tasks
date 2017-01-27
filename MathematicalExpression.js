@@ -12,8 +12,32 @@ var calc = function (expression) {
     do {
     	token = getToken(obj);
     	console.log(token);
-    } while (token != undefined);
-  
+
+     if (!isNaN(token)) {
+            operands.push(+token);
+        } else {
+            
+            if ( token == ')' ) {
+                while (functions.length > 0 && functions[functions.length - 1] != '(') {
+                    popFunction(operands, functions);
+                }
+
+                functions.pop(); // Удаляем саму скобку "("
+            } else {
+                
+                while (canPop(token, functions)) {
+                    popFunction(operands, functions); 
+                }
+
+                functions.push(token); // Кидаем новую операцию в стек
+            }
+        }
+        prevToken = token;
+    }
+    while (token != undefined);
+     
+    return operands.pop();
+  	
 };
 
 function getToken(obj) {
@@ -34,4 +58,12 @@ function getToken(obj) {
     return operation;
 }
 
-calc('500.55555+ 60 / 22.5564 + 0');
+function getPriority(op) {
+    switch (op) {
+        case '(': return -1; // не выталкивает сам и не дает вытолкнуть себя другим
+        case '*': case '/': return 1;
+        case '+': case '-': return 2;
+        default:
+            // Error;
+    }
+}
