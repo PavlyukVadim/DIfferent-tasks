@@ -58,6 +58,20 @@ function getToken(obj) {
     return operation;
 }
 
+function popFunction(operands, functions) {
+    let B = operands.pop();
+    let A = operands.pop();
+    switch ( functions.pop() ) {
+        case '+': operands.push(A + B);
+            break;
+        case '-': operands.push(A - B);
+            break;
+        case '*': operands.push(A * B);
+            break;
+        case '/': operands.push(A / B);
+            break;
+    }
+}
 
 function canPop(op1, functions) {
     if (functions.length == 0) {
