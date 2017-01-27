@@ -58,6 +58,17 @@ function getToken(obj) {
     return operation;
 }
 
+
+function canPop(op1, functions) {
+    if (functions.length == 0) {
+        return false;
+    }
+    let p1 = getPriority(op1);
+    let p2 = getPriority(functions[functions.length - 1]);
+
+    return p1 >= 0 && p2 >= 0 && p1 >= p2;
+}
+
 function getPriority(op) {
     switch (op) {
         case '(': return -1; // не выталкивает сам и не дает вытолкнуть себя другим
