@@ -16,8 +16,6 @@ function group(arr) {
 		}
 		result[index].push(item);
 	});
-
-	//map.set('1', 'str1');
 	return result.filter((item) => item);
 }
 
