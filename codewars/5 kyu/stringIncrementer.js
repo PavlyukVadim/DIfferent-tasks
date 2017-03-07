@@ -8,9 +8,13 @@ function stringIncrementer(str) {
   	  indexFirstDigit--;
   	} else break;
   }
-  let numberOfDigits = str.length - indexFirstDigit || 1;
+  let numberOfDigits = str.length - indexFirstDigit;
   let number = parseInt(str.slice(indexFirstDigit) || 0) + 1;
-  return str.slice(0, indexFirstDigit) + '0'.repeat(numberOfDigits - (number + '').length) + number;
+  let prefix = '';
+  if (numberOfDigits - (number + '').length > 0) {
+  	prefix = '0'.repeat(numberOfDigits - (number + '').length);
+  }
+  return str.slice(0, indexFirstDigit) + prefix + number;
 }
 
-console.log(stringIncrementer('foobar0099'));
+console.log(stringIncrementer('foobar'));
