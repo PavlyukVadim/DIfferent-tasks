@@ -1,11 +1,19 @@
-function add(a, b) {
+function add(...arg) {
+	if (arg.length === 2) {
+		return addTwoNumbers(arg[0], arg[1]); 
+	}
+	return Number(add(...arg.slice(0, -1))) + Number(arg[arg.length - 1]);
+
+}
+
+function addTwoNumbers(a, b) {
 	if (checkValidation(a) && checkValidation(b)) {
 		a = String(a);
 		b = String(b);
 
-		[a, b] = validStrings(a, b);
+		[a, b] = validatingStrings(a, b);
 		let sum = addString(a.split(''), b.split('')); 
-		return sum;
+		return validatingResult(sum);
 	}
 	return NaN;
 }
@@ -23,7 +31,7 @@ function countNumberOfDigitsAfterDot(str) {
 	return str.length - strIndexOfDot - 1;  
 }
 
-function validStrings(a, b) {
+function validatingStrings(a, b) {
 	let aNumberOfDigitsAfterDot = countNumberOfDigitsAfterDot(a);
 	let bNumberOfDigitsAfterDot = countNumberOfDigitsAfterDot(b);
 
@@ -68,7 +76,12 @@ function addString(a, b) {
 		if (sum2digits >= 10) {
 			sum.unshift(sum2digits % 10);
 			if(i >= 1) {
-				a[i - 1]++;	
+				if(a[i - 1] !== '.') {
+					a[i - 1]++;	
+				} else {
+					a[i - 2]++;	
+				}
+				
 			} else rest = 1;
 		} else {
 			sum.unshift(sum2digits);
@@ -83,7 +96,30 @@ function addString(a, b) {
 	return sum.join('');
 }
 
+function validatingResult(str) {
+	let i = 0, j = str.length - 1;
+
+	while(str[i] === '0' || str[j] === '0') {
+
+		let endIntPart = str.indexOf('.');
+		if (~endIntPart) {
+			endIntPart = str.length - 1;
+		}
+
+		if (str[i] === '0' && str[i + 1] === '0') {
+			str = str.slice(1);
+			j--;
+		} else if( (str[j] === '0' && str[j - 1] === '0') || (str[j] === '0' && j >= endIntPart)) {
+			str = str.slice(0, -1);
+			j--;
+		} else break;
+	}
+	return str;
+}
+
 console.log(add(923, '329'));
 console.log(add("1234567890.0987654321", "8765432109.9012345678"));
-console.log(add(100.54656465, 10));
-console.log(add(0.1, 0.0001));
+console.log(add(10000.84, 10000.184));
+console.log(add(10000.91, 10000.191));
+console.log(add(0.300000, '000000.1030000'));
+console.log(add(1, 2, 3, 4, 5));
