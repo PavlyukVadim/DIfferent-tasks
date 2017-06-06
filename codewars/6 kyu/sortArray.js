@@ -1,6 +1,4 @@
 function sortArray(array) {
-  let arrayOfOddNumbers = [];
-  array = array.map((n) => (n % 2) ? Infinity * arrayOfOddNumbers.push(n) : n);
-  arrayOfOddNumbers.sort((a, b) => a - b);
-  return array.map((n) => (n == Infinity) ? arrayOfOddNumbers.shift() : n);
+  const odd = array.filter((x) => x % 2).sort((a,b) => a - b);
+  return array.map((x) => x % 2 ? odd.shift() : x);
 }
