@@ -11,3 +11,10 @@ const comparePowers = (n1, n2) => {
     return ((p2 > p1) ? 1 : (( p2 < p1 ) ? -1 : 0));
   }
 }
+
+/*
+const comparePowers = ([b1, e1], [b2, e2]) => {
+  const d = Math.log(b2) * e2 - Math.log(b1) * e1;
+  return (d > 0) - (d < 0);
+}
+*/
